@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="MiniTotalCommander.View.PanelTC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MiniTotalCommander.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+               
+        <TextBox IsReadOnly="True" IsEnabled="False" Grid.Row="0" Margin="20"  x:Name="path" Text="{Binding Path=CurrentPath,
+                RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <ComboBox                  
+                  ItemsSource="{Binding Path=Drives, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                  SelectedItem="{Binding Path=CurrentDrive, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"                                  
+                  Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Center" Width="60" Margin="20"/>
+
+        <ListBox Grid.Column="0" Grid.Row="2" Margin="20"                  
+                  ItemsSource="{Binding Path=Paths, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                  SelectedItem="{Binding Path=SelectedPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" 
+                                           Command="{Binding Path=DoubleClickCommand, 
+                                                             RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor} }" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
